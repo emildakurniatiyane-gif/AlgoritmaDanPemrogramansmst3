@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Peringkat Kelas</title>
+
+<style>
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+padding:20px;
+font-family:Arial,sans-serif;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+radial-gradient(circle at top left,#ffb6d9,transparent 35%),
+radial-gradient(circle at bottom right,#b9b5ff,transparent 35%),
+linear-gradient(135deg,#ffd6e7,#dcd7ff);
+overflow:auto
+}
+
+.box{
+width:100%;
+max-width:500px;
+background:rgba(255,255,255,.93);
+padding:25px;
+border-radius:28px;
+box-shadow:0 15px 40px #8e6ca555;
+position:relative;
+z-index:2;
+max-height:calc(100vh - 20px);
+overflow-y:auto
+}
+
+h1{
+text-align:center;
+color:#8e44ad;
+font-size:32px;
+margin:5px 0
+}
+
+.subtitle{
+text-align:center;
+color:#888;
+margin-bottom:18px
+}
+
+/* RENTANG NILAI */
+
+.nilai-box{
+background:linear-gradient(135deg,#fce4ec,#eee0ff);
+padding:14px;
+border-radius:18px;
+text-align:center;
+margin-bottom:18px
+}
+
+.nilai-box b{
+display:block;
+color:#7d3c98;
+margin-bottom:9px
+}
+
+.nilai{
+display:flex;
+justify-content:center;
+gap:7px;
+flex-wrap:wrap
+}
+
+.nilai span{
+background:white;
+color:#9b59b6;
+font-weight:bold;
+padding:7px 11px;
+border-radius:10px;
+box-shadow:0 3px 8px #9993
+}
+
+/* FORM */
+
+.form{
+background:#fff5fb;
+padding:17px;
+border-radius:20px
+}
+
+label{
+display:block;
+color:#713f8f;
+font-weight:bold;
+font-size:13px;
+margin-bottom:6px
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:11px;
+border:2px solid #ead7f2;
+border-radius:12px;
+font-size:14px;
+outline:none
+}
+
+input:focus{
+border-color:#b565d9
+}
+
+button{
+width:100%;
+padding:13px;
+border:0;
+border-radius:13px;
+background:linear-gradient(135deg,#ff5f9e,#9b59d0);
+color:white;
+font-weight:bold;
+font-size:14px;
+cursor:pointer;
+transition:.3s
+}
+
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 18px #9b59d055
+}
+
+/* OUTPUT */
+
+.hasil{
+margin-top:19px
+}
+
+.judul{
+color:#713f8f;
+font-size:18px;
+font-weight:bold;
+margin-bottom:9px
+}
+
+.card{
+padding:10px 14px;
+margin:6px 0;
+border-radius:17px;
+display:flex;
+align-items:center;
+min-height:58px;
+animation:muncul .5s
+}
+
+@keyframes muncul{
+from{
+opacity:0;
+transform:translateY(15px)
+}
+to{
+opacity:1;
+transform:translateY(0)
+}
+}
+
+.rank1{
+background:linear-gradient(135deg,#fff0a8,#ffd166)
+}
+
+.rank2{
+background:linear-gradient(135deg,#dff3ff,#a9d6e5)
+}
+
+.rank3{
+background:linear-gradient(135deg,#ffe5d9,#f7c59f)
+}
+
+.nomor{
+width:40px;
+height:40px;
+border-radius:13px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#8e44ad;
+color:white;
+font-weight:bold;
+margin-right:12px;
+flex-shrink:0
+}
+
+.info{
+flex:1
+}
+
+.nama{
+font-weight:bold;
+font-size:16px
+}
+
+.skor{
+font-size:13px;
+color:#555;
+margin-top:3px
+}
+
+.medal{
+font-size:24px
+}
+
+.empty{
+text-align:center;
+background:#f8efff;
+padding:18px;
+border-radius:15px;
+color:#999
+}
+
+/* BUNGA */
+
+.flower{
+position:fixed;
+top:-30px;
+z-index:5;
+pointer-events:none;
+animation:jatuh 4s linear forwards
+}
+
+@keyframes jatuh{
+to{
+transform:translateY(110vh) rotate(720deg);
+opacity:0
+}
+}
+
+/* CONFETTI */
+
+.confetti{
+position:fixed;
+top:-20px;
+z-index:5;
+pointer-events:none;
+animation:jatuh 4s linear forwards
+}
+
+/* UNTUK LAYAR YANG PENDEK */
+
+@media(max-height:750px){
+
+body{
+padding:10px;
+align-items:flex-start
+}
+
+.box{
+padding:20px;
+margin:5px 0;
+max-height:calc(100vh - 20px)
+}
+
+h1{
+font-size:28px
+}
+
+.subtitle{
+margin-bottom:13px
+}
+
+.nilai-box{
+padding:11px;
+margin-bottom:13px
+}
+
+.form{
+padding:14px
+}
+
+.hasil{
+margin-top:14px
+}
+
+.card{
+padding:8px 12px;
+min-height:52px;
+margin:5px 0
+}
+
+.nomor{
+width:36px;
+height:36px
+}
+
+.medal{
+font-size:21px
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🏆 Peringkat Kelas</h1>
+
+<div class="subtitle">
+Penentuan 3 nilai terbesar
+</div>
+
+<!-- RENTANG NILAI -->
+
+<div class="nilai-box">
+
+<b>📊 Rentang Nilai</b>
+
+<div class="nilai">
+<span>70</span>
+<span>75</span>
+<span>80</span>
+<span>85</span>
+<span>90</span>
+<span>95</span>
+<span>100</span>
+</div>
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="form">
+
+<label>NAMA SISWA</label>
+
+<input
+id="nama"
+placeholder="Contoh: Yane"
+>
+
+<label>NILAI UJIAN</label>
+
+<input
+id="nilai"
+type="number"
+min="70"
+max="100"
+placeholder="Masukkan nilai 70 - 100"
+>
+
+<button onclick="proses()">
+✨ Simpan & Proses Peringkat
+</button>
+
+</div>
+
+
+<!-- OUTPUT -->
+
+<div class="hasil">
+
+<div class="judul">
+🌟 Juara Teratas
+</div>
+
+<div id="hasil">
+
+<div class="empty">
+Belum ada data siswa.<br>
+Masukkan nama dan nilai terlebih dahulu.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let data=[];
+
+
+function proses(){
+
+let nama=document.getElementById("nama").value.trim();
+
+let nilai=Number(
+document.getElementById("nilai").value
+);
+
+
+if(!nama || nilai<70 || nilai>100){
+
+alert(
+"Masukkan nama dan nilai antara 70 sampai 100!"
+);
+
+return;
+
+}
+
+
+/* SIMPAN DATA SISWA BARU */
+
+let siswaBaru={
+nama:nama,
+nilai:nilai
+};
+
+data.push(siswaBaru);
+
+
+/* LINEAR SEARCH
+   MENCARI 3 NILAI TERBESAR
+*/
+
+let a=null;
+let b=null;
+let c=null;
+
+
+for(let i=0;i<data.length;i++){
+
+let x=data[i];
+
+
+if(a==null || x.nilai>a.nilai){
+
+c=b;
+b=a;
+a=x;
+
+}
+
+else if(b==null || x.nilai>b.nilai){
+
+c=b;
+b=x;
+
+}
+
+else if(c==null || x.nilai>c.nilai){
+
+c=x;
+
+}
+
+}
+
+
+/* CEK APAKAH SISWA BARU MASUK 3 BESAR */
+
+let juara=[
+a,
+b,
+c
+];
+
+if(
+data.length>3 &&
+!juara.includes(siswaBaru)
+){
+
+alert(
+"⚠️ Nilai "+nilai+
+" milik "+nama+
+" belum masuk 3 besar.\n\n"+
+"3 nilai terbesar saat ini: "+
+juara.map(siswa=>siswa.nilai).join(", ")
+);
+
+}
+
+
+/* TAMPILKAN 3 TERBESAR */
+
+let emoji=[
+"👑",
+"🥈",
+"🥉"
+];
+
+let hasil="";
+
+
+for(let i=0;i<3;i++){
+
+if(juara[i]){
+
+hasil+=`
+
+<div class="card rank${i+1}">
+
+<div class="nomor">
+${i+1}
+</div>
+
+<div class="info">
+
+<div class="nama">
+${emoji[i]} ${juara[i].nama}
+</div>
+
+<div class="skor">
+Nilai: <b>${juara[i].nilai}</b>
+</div>
+
+</div>
+
+<div class="medal">
+${emoji[i]}
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=hasil;
+
+
+document.getElementById("nama").value="";
+
+document.getElementById("nilai").value="";
+
+
+/* EFEK PERAYAAN */
+
+pesta();
+
+}
+
+
+/* BUNGA + CONFETTI */
+
+function pesta(){
+
+let bunga=[
+"🌸",
+"🌺",
+"🌷",
+"🌼",
+"🌹"
+];
+
+
+for(let i=0;i<25;i++){
+
+let x=document.createElement("div");
+
+x.className="flower";
+
+x.innerHTML=
+bunga[
+Math.floor(
+Math.random()*bunga.length
+)
+];
+
+x.style.left=
+Math.random()*100+"vw";
+
+x.style.fontSize=
+20+Math.random()*15+"px";
+
+x.style.animationDuration=
+3+Math.random()*3+"s";
+
+
+document.body.appendChild(x);
+
+
+setTimeout(
+()=>x.remove(),
+6000
+);
+
+}
+
+
+/* CONFETTI */
+
+let warna=[
+"#ff5f9e",
+"#ffd166",
+"#9b59d0",
+"#5dade2"
+];
+
+
+for(let i=0;i<50;i++){
+
+let x=document.createElement("div");
+
+x.className="confetti";
+
+x.style.left=
+Math.random()*100+"vw";
+
+x.style.width="8px";
+
+x.style.height="12px";
+
+x.style.background=
+warna[
+Math.floor(
+Math.random()*warna.length
+)
+];
+
+x.style.animationDuration=
+2+Math.random()*3+"s";
+
+
+document.body.appendChild(x);
+
+
+setTimeout(
+()=>x.remove(),
+6000
+);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
