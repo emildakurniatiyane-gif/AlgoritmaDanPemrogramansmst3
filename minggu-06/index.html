@@ -1,878 +1,218 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tugas Algoritma dan Pemrograman</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengurutan Nilai Mahasiswa</title>
 
 <style>
-*{
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-margin:0;
-background:linear-gradient(135deg,#ffd6e7,#dcd7ff,#b9b5ff);
-min-height:100vh;
-color:#333;
-}
-
-.page{
-display:none;
-min-height:100vh;
-padding:25px;
-}
-
-.page.active{
-display:block;
-}
-
-/* HOME */
-.home-box{
-max-width:800px;
-margin:auto;
-background:white;
-padding:30px;
-border-radius:28px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-}
-
-h1{
-text-align:center;
-color:#7b4fa3;
-}
-
-.subtitle{
-text-align:center;
-margin-bottom:25px;
-color:#777;
-}
-
-.info{
-display:flex;
-gap:15px;
-justify-content:center;
-flex-wrap:wrap;
-margin-bottom:25px;
-}
-
-.info-card{
-background:#f5edff;
-padding:15px 25px;
-border-radius:18px;
-text-align:center;
-}
-
-.tasks{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-}
-
-.task{
-padding:20px;
-border-radius:20px;
-background:linear-gradient(135deg,#ffe1ef,#e7ddff);
-cursor:pointer;
-text-align:center;
-transition:.2s;
-}
-
-.task:hover{
-transform:translateY(-4px);
-box-shadow:0 8px 18px rgba(0,0,0,.12);
-}
-
-.task h3{
-margin:5px 0;
-color:#70469b;
-}
-
-/* BUTTON KEMBALI */
-.back{
-display:inline-block;
-padding:10px 18px;
-border:0;
-border-radius:15px;
-background:#7b4fa3;
-color:white;
-cursor:pointer;
-margin-bottom:15px;
-}
-
-/* MINGGU 04 */
-.rank-page{
-background:linear-gradient(135deg,#ffb6d9,#b9b5ff,#ffd6e7,#dcd7ff);
-}
-
-.rank-box{
-max-width:500px;
-margin:20px auto;
-background:white;
-padding:25px;
-border-radius:28px;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
-}
-
-.rank-box h2{
-text-align:center;
-color:#7b4fa3;
-}
-
-.rank-sub{
-text-align:center;
-color:#777;
-margin-bottom:20px;
-}
-
-.nilai-list{
-display:flex;
-justify-content:center;
-gap:7px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.nilai-list span{
-background:#f1e7ff;
-padding:7px 11px;
-border-radius:12px;
-font-weight:bold;
-color:#70469b;
-}
-
-input{
-width:100%;
-padding:12px;
-margin:7px 0;
-border:1px solid #ddd;
-border-radius:12px;
-outline:none;
-}
-
-.btn{
-width:100%;
-padding:12px;
-border:0;
-border-radius:14px;
-background:#7b4fa3;
-color:white;
-font-weight:bold;
-cursor:pointer;
-margin-top:8px;
-}
-
-#ranking{
-margin-top:20px;
-}
-
-.rank-row{
-background:#f8f1ff;
-padding:13px;
-margin:8px 0;
-border-radius:14px;
-}
-
-/* BUNGA SAAT MENDAPAT PERINGKAT */
-.flower{
-position:fixed;
-top:-40px;
-font-size:30px;
-z-index:9999;
-pointer-events:none;
-animation:jatuh 3.5s linear forwards;
-}
-
-@keyframes jatuh{
-0%{
-transform:translateY(0) rotate(0deg);
-opacity:1;
-}
-100%{
-transform:translateY(105vh) rotate(360deg);
-opacity:0;
-}
-}
-
-/* MINGGU 05 */
-.super-page{
-background:#eefaf0;
-}
-
-.super-box{
-max-width:850px;
-margin:20px auto;
-background:white;
-padding:30px;
-border-radius:28px;
-box-shadow:0 10px 30px rgba(0,0,0,.12);
-}
-
-.super-box h2{
-text-align:center;
-color:#24934a;
-}
-
-.welcome{
-text-align:center;
-color:#666;
-margin-bottom:25px;
-}
-
-.search-box{
-display:flex;
-gap:10px;
-margin-bottom:20px;
-}
-
-.search-box input{
-margin:0;
-}
-
-.search-box button{
-border:0;
-background:#24934a;
-color:white;
-padding:0 20px;
-border-radius:12px;
-cursor:pointer;
-}
-
-.result{
-background:#f0fff3;
-padding:20px;
-border-radius:18px;
-margin-top:15px;
-}
-
-.search-title{
-font-weight:bold;
-color:#24934a;
-margin-bottom:10px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:15px;
-}
-
-th,td{
-padding:10px;
-border-bottom:1px solid #ddd;
-text-align:left;
-}
-
-th{
-background:#e5f7e9;
-color:#24934a;
-}
-
-/* MINGGU 06 */
-.sort-page{
-background:linear-gradient(135deg,#ffb6d9,#c3b5ff,#a8e6ff);
-}
-
-.sort-box{
-max-width:700px;
-margin:20px auto;
-background:white;
-padding:25px;
-border-radius:22px;
-box-shadow:0 10px 30px #7863a855;
-}
-
-.sort-box h2,.sort-heading{
-color:#7545b8;
-text-align:center;
-}
-
-.sort-subtitle{
-color:#777;
-text-align:center;
-margin-bottom:25px;
-}
-
-.sort-count{
-background:linear-gradient(135deg,#ff70a6,#a477ff);
-color:white;
-padding:18px;
-border-radius:15px;
-margin:20px 0;
-text-align:center;
-}
-
-.sort-count p{
-margin:0 0 8px;
-}
-
-.sort-count strong{
-display:block;
-font-size:32px;
-}
+* { box-sizing: border-box; }
 
-.sort-buttons{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:10px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 30px 15px;
+    background: linear-gradient(135deg, #ffb6d9, #c3b5ff, #a8e6ff);
+    min-height: 100vh;
 }
 
-.sort-buttons button{
-border:0;
-padding:12px 18px;
-border-radius:12px;
-color:white;
-font-weight:bold;
-cursor:pointer;
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px #7863a855;
 }
 
-.sort-buttons button:hover{
-opacity:.8;
-}
-
-.sort-awal{
-background:#ff70a6;
-}
-
-.sort-naik{
-background:#805ad5;
-}
-
-.sort-turun{
-background:#00a6a6;
-}
+h1 { color: #7545b8; }
 
-.sort-table-wrap{
-overflow-x:auto;
-border-radius:12px;
-}
+.subtitle { color: #777; }
 
-.sort-table{
-width:100%;
-border-collapse:collapse;
-margin-top:15px;
+.jumlah {
+    background: linear-gradient(135deg, #ff70a6, #a477ff);
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin: 20px 0;
 }
 
-.sort-table th{
-background:linear-gradient(135deg,#805ad5,#ec72b5);
-color:white;
-padding:14px 8px;
-text-align:center;
+.jumlah h2 {
+    margin: 0;
+    font-size: 32px;
 }
 
-.sort-table td{
-padding:12px 8px;
-text-align:center;
-color:#444;
-border:0;
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.sort-table tbody tr:nth-child(odd){
-background:#f5efff;
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.sort-table tbody tr:nth-child(even){
-background:#fff0f7;
-}
+button:hover { opacity: 0.8; }
 
-.sort-table tbody tr:hover{
-background:#dff8ff;
-}
+.awal { background: #ff70a6; }
+.naik { background: #805ad5; }
+.turun { background: #00a6a6; }
 
-.sort-table td:last-child{
-color:#7545b8;
-font-weight:bold;
-}
+h3 { color: #7545b8; margin-top: 28px; }
 
-.sort-footer{
-margin-top:22px;
-padding:15px;
-border-radius:12px;
-background:#f0eaff;
-color:#7545b8;
-font-size:13px;
+.table-box {
+    overflow-x: auto;
+    border-radius: 12px;
 }
 
-@media(max-width:600px){
-.sort-box{
-padding:20px;
-}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
 
-@media(max-width:600px){
-.page{
-padding:15px;
+th {
+    background: linear-gradient(135deg, #805ad5, #ec72b5);
+    color: white;
+    padding: 14px 8px;
 }
 
-.rank-box,
-.super-box,
-.home-box{
-padding:20px;
+td {
+    padding: 12px 8px;
+    text-align: center;
+    color: #444;
 }
 
-.search-box{
-flex-direction:column;
-}
+tbody tr:nth-child(odd) { background: #f5efff; }
+tbody tr:nth-child(even) { background: #fff0f7; }
+tbody tr:hover { background: #dff8ff; }
 
-.search-box button{
-padding:12px;
-}
+.footer {
+    margin-top: 22px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f0eaff;
+    color: #7545b8;
+    font-size: 13px;
 }
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<!-- HOME -->
-<div id="home" class="page active">
+    <h1>🌸 Nilai Mahasiswa 🌸</h1>
+    <p class="subtitle">
+        Program Pengurutan Nilai Menggunakan Bubble Sort
+    </p>
 
-<div class="home-box">
+    <div class="jumlah">
+        <p>👩‍🎓 Jumlah Mahasiswa</p>
+        <h2 id="total">12 Mahasiswa</h2>
+    </div>
 
-<h1>📚 Tugas Algoritma dan Pemrograman</h1>
+    <div class="buttons">
+        <button class="awal"
+        onclick="tampil(nilai, '📋 Data Awal Mahasiswa')">
+            📋 Data Awal
+        </button>
 
-<div class="subtitle">
-Kumpulan tugas algoritma dan pemrograman
-</div>
+        <button class="naik" onclick="urutkan(true)">
+            ⬆ Ascending
+        </button>
 
-<div class="info">
+        <button class="turun" onclick="urutkan(false)">
+            ⬇ Descending
+        </button>
+    </div>
 
-<div class="info-card">
-<b>Nama</b><br>
-Emilda Kurniati Yane
-</div>
+    <h3 id="judul">📊 Data Awal Mahasiswa</h3>
 
-<div class="info-card">
-<b>NIM</b><br>
-1250002
-</div>
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Nilai UAS</th>
+                </tr>
+            </thead>
+            <tbody id="hasil"></tbody>
+        </table>
+    </div>
 
-</div>
+    <div class="footer">
+        ✨ Ascending: nilai terkecil ke terbesar
+        <br><br>
+        💜 Descending: nilai terbesar ke terkecil
+        <br><br>
+        📌 Pengurutan menggunakan algoritma Bubble Sort.
+    </div>
 
-<div class="tasks">
-
-<div class="task">
-<h3>Minggu 01</h3>
-<p>Tugas Minggu 01</p>
-</div>
-
-<div class="task">
-<h3>Minggu 02</h3>
-<p>Tugas Minggu 02</p>
-</div>
-
-<div class="task">
-<h3>Minggu 03</h3>
-<p>Tugas Minggu 03</p>
-</div>
-
-<div class="task" onclick="openPage('minggu4')">
-<h3>🏆 Minggu 04</h3>
-<p>Peringkat Kelas</p>
-</div>
-
-<div class="task" onclick="openPage('minggu5')">
-<h3>🛒 Minggu 05</h3>
-<p>SuperMart</p>
-</div>
-
-<div class="task" onclick="openPage('minggu6')">
-<h3>Minggu 06</h3>
-<p>Pengurutan Nilai Mahasiswa</p>
-</div>
-
-</div>
-</div>
-</div>
-
-<!-- MINGGU 04 -->
-<div id="minggu4" class="page rank-page">
-
-<button class="back" onclick="home()">← Kembali</button>
-
-<div class="rank-box">
-
-<h2>🏆 Peringkat Kelas</h2>
-
-<div class="rank-sub">
-Penentuan 3 nilai terbesar
-</div>
-
-<div class="nilai-list">
-<span>70</span>
-<span>75</span>
-<span>80</span>
-<span>85</span>
-<span>90</span>
-<span>95</span>
-<span>100</span>
-</div>
-
-<input
-type="text"
-id="rNama"
-placeholder="Masukkan nama"
->
-
-<input
-type="number"
-id="rNilai"
-placeholder="Masukkan nilai"
-min="70"
-max="100"
->
-
-<button class="btn" onclick="tambahNilai()">
-Tambah Nilai
-</button>
-
-<div id="ranking"></div>
-
-</div>
-</div>
-
-<!-- MINGGU 05 -->
-<div id="minggu5" class="page super-page">
-
-<button class="back" onclick="home()">← Kembali</button>
-
-<div class="super-box">
-
-<h2>🛒 SuperMart</h2>
-
-<div class="welcome">
-Selamat datang di SuperMart
-</div>
-
-<div class="search-box">
-
-<input
-type="number"
-id="barcode"
-placeholder="Masukkan barcode produk"
->
-
-<button onclick="cariProduk()">
-Cari
-</button>
-
-</div>
-
-<div id="hasil"></div>
-
-</div>
-</div>
-
-<!-- MINGGU 06 -->
-<div id="minggu6" class="page sort-page">
-
-<button class="back" onclick="home()">← Kembali</button>
-
-<div class="sort-box">
-
-<h2>🌸 Nilai Mahasiswa 🌸</h2>
-
-<p class="sort-subtitle">
-Program Pengurutan Nilai Menggunakan Bubble Sort
-</p>
-
-<div class="sort-count">
-<p>👩‍🎓 Jumlah Mahasiswa</p>
-<strong id="total6">12 Mahasiswa</strong>
-</div>
-
-<div class="sort-buttons">
-<button class="sort-awal" onclick="tampilNilai6(nilai6,'📋 Data Awal Mahasiswa')">📋 Data Awal</button>
-<button class="sort-naik" onclick="urutkanNilai6(true)">⬆ Ascending</button>
-<button class="sort-turun" onclick="urutkanNilai6(false)">⬇ Descending</button>
-</div>
-
-<h3 class="sort-heading" id="judul6">📊 Data Awal Mahasiswa</h3>
-
-<div class="sort-table-wrap">
-<table class="sort-table">
-<thead>
-<tr>
-<th>No.</th>
-<th>Nama Mahasiswa</th>
-<th>Nilai UAS</th>
-</tr>
-</thead>
-<tbody id="hasil6"></tbody>
-</table>
-</div>
-
-<div class="sort-footer">
-✨ Ascending: nilai terkecil ke terbesar<br><br>
-💜 Descending: nilai terbesar ke terkecil<br><br>
-📌 Pengurutan menggunakan algoritma Bubble Sort.
-</div>
-
-</div>
 </div>
 
 <script>
-
-/* PINDAH HALAMAN */
-function openPage(id){
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
-});
-document.getElementById(id).classList.add("active");
-}
-
-function home(){
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
-});
-document.getElementById("home").classList.add("active");
-}
-
-/* MINGGU 04 - PERINGKAT KELAS */
-let siswa=[];
-
-function tambahNilai(){
-let n=document.getElementById("rNama").value.trim();
-let s=Number(document.getElementById("rNilai").value);
-
-if(!n||s<70||s>100){
-alert("Masukkan nama dan nilai 70 - 100.");
-return;
-}
-
-if(siswa.length>=3 && s<=siswa[2].nilai){
-alert("Nilai tidak masuk 3 besar.");
-return;
-}
-
-siswa.push({
-nama:n,
-nilai:s
-});
-
-siswa.sort((a,b)=>b.nilai-a.nilai);
-siswa=siswa.slice(0,3);
-
-document.getElementById("ranking").innerHTML=
-siswa.map((x,i)=>
-`<div class="rank-row">
-🏅 <b>${i+1}. ${x.nama}</b> — Nilai ${x.nilai}
-</div>`
-).join("");
-
-document.getElementById("rNama").value="";
-document.getElementById("rNilai").value="";
-
-/* BUNGA-BUNGA SAAT MASUK 3 BESAR */
-for(let i=0;i<30;i++){
-let bunga=document.createElement("div");
-bunga.className="flower";
-
-bunga.innerHTML=
-["🌸","🌺","🌷","🌼","💐"]
-[Math.floor(Math.random()*5)];
-
-bunga.style.left=Math.random()*100+"vw";
-bunga.style.animationDelay=Math.random()*1.2+"s";
-document.body.appendChild(bunga);
-
-setTimeout(()=>{
-bunga.remove();
-},4500);
-}
-}
-
-/* MINGGU 05 - SUPERMART */
-const produk=[
-
-{barcode:1008,nama:"Biskuit Roma Kelapa",harga:7000},
-{barcode:1010,nama:"Indomie Goreng",harga:3500},
-{barcode:1020,nama:"Indomie Soto",harga:3500},
-{barcode:1030,nama:"Aqua 600ml",harga:3500},
-{barcode:1040,nama:"Teh Botol Sosro",harga:5000},
-{barcode:1050,nama:"Kopi Good Day",harga:6000},
-{barcode:1060,nama:"Susu Ultra Milk",harga:7000},
-{barcode:1070,nama:"Chitato",harga:11000},
-{barcode:1080,nama:"Taro",harga:8000},
-{barcode:1090,nama:"Oreo",harga:9000},
-
-{barcode:1100,nama:"SilverQueen",harga:15000},
-{barcode:1110,nama:"Tango Wafer",harga:8000},
-{barcode:1120,nama:"Pocky",harga:12000},
-{barcode:1130,nama:"Lays",harga:10000},
-{barcode:1140,nama:"Coca Cola",harga:6000},
-{barcode:1150,nama:"Sprite",harga:6000},
-{barcode:1160,nama:"Fanta",harga:6000},
-{barcode:1170,nama:"Milo",harga:9000},
-{barcode:1180,nama:"Energen",harga:8000},
-{barcode:1190,nama:"Beng-Beng",harga:3000},
-
-{barcode:1198,nama:"Biskuit Roma Kelapa",harga:7000},
-{barcode:1200,nama:"Nabati",harga:5000},
-{barcode:1210,nama:"Teh Pucuk",harga:4000},
-{barcode:1220,nama:"Le Minerale",harga:3500},
-{barcode:1230,nama:"Floridina",harga:4000},
-{barcode:1240,nama:"Pop Mie",harga:6000},
-{barcode:1250,nama:"Sedaap Goreng",harga:3500},
-{barcode:1260,nama:"Kapal Api",harga:6000},
-{barcode:1270,nama:"ABC Susu",harga:5000},
-{barcode:1280,nama:"Roma Malkist",harga:8000},
-
-{barcode:1290,nama:"Garuda Kacang",harga:7000},
-{barcode:1300,nama:"Nextar",harga:5000},
-{barcode:1310,nama:"Better",harga:5000},
-{barcode:1320,nama:"Tic Tac",harga:6000},
-{barcode:1330,nama:"Cheetos",harga:8000},
-{barcode:1340,nama:"Qtela",harga:9000},
-{barcode:1350,nama:"Good Time",harga:8000},
-{barcode:1360,nama:"Teh Kotak",harga:5000},
-{barcode:1370,nama:"Bear Brand",harga:11000},
-{barcode:1380,nama:"Susu Dancow",harga:12000},
-
-{barcode:1390,nama:"Bimoli",harga:18000},
-{barcode:1400,nama:"Minyak Kita",harga:17000},
-{barcode:1410,nama:"Gula Pasir",harga:16000},
-{barcode:1420,nama:"Beras Premium",harga:65000},
-{barcode:1430,nama:"Tepung Terigu",harga:12000},
-{barcode:1666,nama:"Keju Kraft Cheddar",harga:18000},
-{barcode:1777,nama:"Sosis So Nice",harga:15000},
-{barcode:1888,nama:"Es Krim Walls Magnum",harga:20000},
-{barcode:1990,nama:"Kopi Kapal Api",harga:7000},
-{barcode:1999,nama:"Kopi Sachet Nescafe Classic",harga:2500}
-
+let nilai = [
+    {nama: "Dini", nilai: 99.7},
+    {nama: "Mario", nilai: 87.1},
+    {nama: "Yane", nilai: 90.5},
+    {nama: "Maria", nilai: 85.0},
+    {nama: "Andi", nilai: 78.5},
+    {nama: "Budi", nilai: 92.0},
+    {nama: "Sinta", nilai: 88.5},
+    {nama: "Rina", nilai: 75.0},
+    {nama: "Doni", nilai: 80.0},
+    {nama: "Putri", nilai: 95.5},
+    {nama: "Roni", nilai: 82.0},
+    {nama: "Lala", nilai: 89.0}
 ];
 
-/* LINEAR SEARCH */
-function linearSearch(kode){
-for(let i=0;i<produk.length;i++){
-if(produk[i].barcode===kode){
-return {
-produk:produk[i],
-langkah:i+1
-};
-}
-}
-return null;
-}
+document.getElementById("total").textContent =
+    nilai.length + " Mahasiswa";
 
-/* BINARY SEARCH */
-function binarySearch(kode){
-let kiri=0;
-let kanan=produk.length-1;
-let langkah=0;
+function tampil(data, judul) {
+    document.getElementById("judul").textContent = judul;
 
-while(kiri<=kanan){
-let tengah=Math.floor((kiri+kanan)/2);
-langkah++;
-
-if(produk[tengah].barcode===kode){
-return {
-produk:produk[tengah],
-langkah:langkah
-};
+    document.getElementById("hasil").innerHTML =
+        data.map((m, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${m.nama}</td>
+                <td>${m.nilai}</td>
+            </tr>
+        `).join("");
 }
 
-if(produk[tengah].barcode<kode){
-kiri=tengah+1;
-}else{
-kanan=tengah-1;
-}
-}
+function urutkan(naik) {
+    let data = [...nilai];
 
-return null;
-}
+    for (let i = 0; i < data.length - 1; i++) {
+        for (let j = 0; j < data.length - 1 - i; j++) {
+            if (naik
+                ? data[j].nilai > data[j + 1].nilai
+                : data[j].nilai < data[j + 1].nilai) {
 
-/* CARI PRODUK */
-function cariProduk(){
-let kode=Number(document.getElementById("barcode").value);
+                let sementara = data[j];
+                data[j] = data[j + 1];
+                data[j + 1] = sementara;
+            }
+        }
+    }
 
-if(!kode){
-alert("Masukkan barcode produk.");
-return;
-}
-
-let linear=linearSearch(kode);
-let binary=binarySearch(kode);
-let html="";
-
-if(linear){
-html+=`
-<div class="result">
-<div class="search-title">🔎 Hasil Pencarian</div>
-<b>Produk:</b> ${linear.produk.nama}<br>
-<b>Barcode:</b> ${linear.produk.barcode}<br>
-<b>Harga:</b> Rp${linear.produk.harga.toLocaleString("id-ID")}
-</div>
-`;
-
-html+=`
-<div class="result">
-<div class="search-title">📊 Perbandingan Pencarian</div>
-<b>Linear Search</b><br>
-Ditemukan dalam ${linear.langkah} langkah.
-<br><br>
-<b>Binary Search</b><br>
-Ditemukan dalam ${binary.langkah} langkah.
-</div>
-`;
-}else{
-html=`
-<div class="result">
-❌ Produk dengan barcode <b>${kode}</b> tidak ditemukan.
-</div>
-`;
+    tampil(data, naik
+        ? "⬆ Ascending (Kecil ke Besar)"
+        : "⬇ Descending (Besar ke Kecil)");
 }
 
-document.getElementById("hasil").innerHTML=html;
-}
-
-/* MINGGU 06 - BUBBLE SORT */
-let nilai6=[
-{nama:"Syifaul",nilai:99.8},
-{nama:"Anwar",nilai:87.1},
-{nama:"Yane",nilai:90.5},
-{nama:"Maria",nilai:85.0},
-{nama:"Andi",nilai:78.5},
-{nama:"Budi",nilai:92.0},
-{nama:"Sinta",nilai:88.5},
-{nama:"Rina",nilai:75.0},
-{nama:"Doni",nilai:80.0},
-{nama:"Putri",nilai:95.5},
-{nama:"Mahasiswa 11",nilai:82.0},
-{nama:"Mahasiswa 12",nilai:89.0}
-];
-
-document.getElementById("total6").textContent=nilai6.length+" Mahasiswa";
-
-function tampilNilai6(data,judul){
-document.getElementById("judul6").textContent=judul;
-document.getElementById("hasil6").innerHTML=data.map((m,i)=>
-`<tr><td>${i+1}</td><td>${m.nama}</td><td>${m.nilai}</td></tr>`
-).join("");
-}
-
-function urutkanNilai6(naik){
-let data=[...nilai6];
-
-for(let i=0;i<data.length-1;i++){
-for(let j=0;j<data.length-1-i;j++){
-if(naik ? data[j].nilai>data[j+1].nilai : data[j].nilai<data[j+1].nilai){
-let sementara=data[j];
-data[j]=data[j+1];
-data[j+1]=sementara;
-}
-}
-}
-
-tampilNilai6(
-data,
-naik ? "⬆ Ascending (Kecil ke Besar)" : "⬇ Descending (Besar ke Kecil)"
-);
-}
-
-tampilNilai6(nilai6,"📊 Data Awal Mahasiswa");
-
+tampil(nilai, "📊 Data Awal Mahasiswa");
 </script>
 </body>
 </html>
+```
