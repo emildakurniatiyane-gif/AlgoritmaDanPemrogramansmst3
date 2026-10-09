@@ -1,0 +1,218 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengurutan Nilai Mahasiswa</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 30px 15px;
+    background: linear-gradient(135deg, #ffb6d9, #c3b5ff, #a8e6ff);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px #7863a855;
+}
+
+h1 { color: #7545b8; }
+
+.subtitle { color: #777; }
+
+.jumlah {
+    background: linear-gradient(135deg, #ff70a6, #a477ff);
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.jumlah h2 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover { opacity: 0.8; }
+
+.awal { background: #ff70a6; }
+.naik { background: #805ad5; }
+.turun { background: #00a6a6; }
+
+h3 { color: #7545b8; margin-top: 28px; }
+
+.table-box {
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: linear-gradient(135deg, #805ad5, #ec72b5);
+    color: white;
+    padding: 14px 8px;
+}
+
+td {
+    padding: 12px 8px;
+    text-align: center;
+    color: #444;
+}
+
+tbody tr:nth-child(odd) { background: #f5efff; }
+tbody tr:nth-child(even) { background: #fff0f7; }
+tbody tr:hover { background: #dff8ff; }
+
+.footer {
+    margin-top: 22px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f0eaff;
+    color: #7545b8;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>🌸 Nilai Mahasiswa 🌸</h1>
+    <p class="subtitle">
+        Program Pengurutan Nilai Menggunakan Bubble Sort
+    </p>
+
+    <div class="jumlah">
+        <p>👩‍🎓 Jumlah Mahasiswa</p>
+        <h2 id="total">12 Mahasiswa</h2>
+    </div>
+
+    <div class="buttons">
+        <button class="awal"
+        onclick="tampil(nilai, '📋 Data Awal Mahasiswa')">
+            📋 Data Awal
+        </button>
+
+        <button class="naik" onclick="urutkan(true)">
+            ⬆ Ascending
+        </button>
+
+        <button class="turun" onclick="urutkan(false)">
+            ⬇ Descending
+        </button>
+    </div>
+
+    <h3 id="judul">📊 Data Awal Mahasiswa</h3>
+
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Nilai UAS</th>
+                </tr>
+            </thead>
+            <tbody id="hasil"></tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        ✨ Ascending: nilai terkecil ke terbesar
+        <br><br>
+        💜 Descending: nilai terbesar ke terkecil
+        <br><br>
+        📌 Pengurutan menggunakan algoritma Bubble Sort.
+    </div>
+
+</div>
+
+<script>
+let nilai = [
+    {nama: "Dini", nilai: 99.7},
+    {nama: "Mario", nilai: 87.1},
+    {nama: "Yane", nilai: 90.5},
+    {nama: "Maria", nilai: 85.0},
+    {nama: "Andi", nilai: 78.5},
+    {nama: "Budi", nilai: 92.0},
+    {nama: "Sinta", nilai: 88.5},
+    {nama: "Rina", nilai: 75.0},
+    {nama: "Doni", nilai: 80.0},
+    {nama: "Putri", nilai: 95.5},
+    {nama: "Roni", nilai: 82.0},
+    {nama: "Lala", nilai: 89.0}
+];
+
+document.getElementById("total").textContent =
+    nilai.length + " Mahasiswa";
+
+function tampil(data, judul) {
+    document.getElementById("judul").textContent = judul;
+
+    document.getElementById("hasil").innerHTML =
+        data.map((m, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${m.nama}</td>
+                <td>${m.nilai}</td>
+            </tr>
+        `).join("");
+}
+
+function urutkan(naik) {
+    let data = [...nilai];
+
+    for (let i = 0; i < data.length - 1; i++) {
+        for (let j = 0; j < data.length - 1 - i; j++) {
+            if (naik
+                ? data[j].nilai > data[j + 1].nilai
+                : data[j].nilai < data[j + 1].nilai) {
+
+                let sementara = data[j];
+                data[j] = data[j + 1];
+                data[j + 1] = sementara;
+            }
+        }
+    }
+
+    tampil(data, naik
+        ? "⬆ Ascending (Kecil ke Besar)"
+        : "⬇ Descending (Besar ke Kecil)");
+}
+
+tampil(nilai, "📊 Data Awal Mahasiswa");
+</script>
+</body>
+</html>
+```
